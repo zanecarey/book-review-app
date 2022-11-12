@@ -1,0 +1,11 @@
+POST http://localhost:3001/api/reviews
+Content-Type: application/json
+# Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InphcnkiLCJpZCI6IjYzMmZlMDYzOTI3ZGUyY2ZlMmE3M2EwNiIsImlhdCI6MTY2NDA4MjgxMCwiZXhwIjoxNjY0MDg2NDEwfQ.yaTIwlBlOpMRVaVOMpDwZPUHu8u9F22SfMYWdMjrU3I
+
+{
+    "bookTitle": "hobbit",
+    "author": "tolkien", 
+    "reviewTitle": "good book", 
+    "likes": 1,
+    "dislikes": 4
+}
