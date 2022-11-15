@@ -20,4 +20,4 @@ reviewSchema.set('toJSON', {
     }
 })
 
-module.exports = mongoose.model('BookReview', reviewSchema)
+module.exports = mongoose.model('Review', reviewSchema)

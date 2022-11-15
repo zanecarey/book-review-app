@@ -2,12 +2,18 @@ const reviewsRouter = require('express').Router()
 const config = require('../utils/config')
 const Review = require('../models/review')
 const User = require('../models/user')
-//const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const { default: mongoose } = require('mongoose')
 
 
 //GET TOKEN FROM FUNCTION
-//TODO
+const getTokenFrom = request => {
+    const authorization = request.get('authorization')
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+        return authorization.substring(7)
+    }
+    return null
+}
 
 reviewsRouter.get('/', async (request, response) => {
     const reviews = await Review
@@ -24,3 +30,31 @@ reviewsRouter.get('/:id', async (request, response, next) => {
         response.status(404).end()
     }
 })
+
+reviewsRouter.post('/', async (request, response, next) => {
+    const body = request.body
+
+    const token = getTokenFrom(request)
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    if (!token || !decodedToken.id) {
+        return response.status(401).json({ error: 'token missing or invalid' })
+    }
+
+    const user = await User.findById(decodedToken.id)
+
+    const review = new Review({
+        bookTitle: body.bookTitle,
+        author: body.author,
+        reviewTitle: body.reviewTitle,
+        likes: body.likes || 0,
+        dislikes: body.dislikes || 0,
+        user: user._id
+    })
+
+    const savedReview = await review.save()
+    user.reviews = user.reviews.concat(savedReview._id)
+    await user.save()
+    response.status(201).json(savedReview)
+})
+
+module.exports = reviewsRouter
