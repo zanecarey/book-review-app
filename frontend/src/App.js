@@ -1,12 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
-import logo from './logo.svg';
 import Review from './components/Review'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Footer from './components/Footer'
 import Togglable from './components/Togglable'
 import ReviewForm from './components/ReviewForm'
-import './App.css';
 
 import reviewService from './services/reviews'
 import loginService from './services/login'
@@ -93,6 +91,8 @@ const App = () => {
         sendNotification({ message: `Error: review not changed`, type: 'error' })
       })
   }
+
+  const reviewFormRef = useRef()
 
   return (
     <div>

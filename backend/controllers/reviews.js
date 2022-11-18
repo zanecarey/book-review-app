@@ -23,7 +23,7 @@ reviewsRouter.get('/', async (request, response) => {
 })
 
 reviewsRouter.get('/:id', async (request, response, next) => {
-    const review = await review.findById(request.params.id)
+    const review = await Review.findById(request.params.id)
     if (review) {
         response.json(review.toJSON())
     } else {
@@ -57,4 +57,28 @@ reviewsRouter.post('/', async (request, response, next) => {
     response.status(201).json(savedReview)
 })
 
+reviewsRouter.delete('/:id', async (request, response, next) => {
+    await Review.findByIdAndRemove(request.params.id)
+    response.status(204).end()
+})
+
+reviewsRouter.put('/:id', async (request, response, next) => {
+    const body = request.body
+
+    const review = {
+        bookTitle: body.bookTitle,
+        author: body.author,
+        reviewTitle: body.reviewTitle,
+        likes: body.likes,
+        dislikes: body.dislikes,
+    }
+
+
+    Review.findByIdAndUpdate(request.params.id, review, { new: true })
+        .then(updatedReview => {
+            response.json(updatedReview.toJSON())
+        })
+        .catch(error => next(error))
+
+})
 module.exports = reviewsRouter
