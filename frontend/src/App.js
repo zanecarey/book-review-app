@@ -1,11 +1,21 @@
 import { useState, useEffect, useRef } from 'react'
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link,
+  Navigate,
+  useParams,
+  useNavigate,
+  useMatch
+} from "react-router-dom"
 import Review from './components/Review'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Footer from './components/Footer'
 import Togglable from './components/Togglable'
 import ReviewForm from './components/ReviewForm'
-
+import About from './components/routecomps/About'
+import CreateNew from './components/routecomps/CreateNew'
+import ReviewList from './components/routecomps/ReviewList'
 import reviewService from './services/reviews'
 import loginService from './services/login'
 
@@ -94,6 +104,12 @@ const App = () => {
 
   const reviewFormRef = useRef()
 
+  const match = useMatch('/reviews/:id')
+
+  const review = match
+    ? reviews.find((review) => review.id === Number(match.params.id))
+    : null
+
   return (
     <div>
       <h2>Book Reviews</h2>
@@ -111,6 +127,12 @@ const App = () => {
         </Togglable> :
         <div>
           <p>{user.name} logged in</p>
+          <Routes>
+            <Route path="/reviews/:id" element={<Review review={review}/>} />
+            <Route path="/about" element={<About />} />
+            <Route path="/create_new" element={<ReviewForm createReview={addReview} />} />
+            <Route path="/" element={<ReviewList reviews={reviews}/>} />
+          </Routes>
           <Togglable buttonLabel="new review" ref={reviewFormRef}>
             <ReviewForm createReview={addReview} />
           </Togglable>
