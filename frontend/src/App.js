@@ -14,6 +14,8 @@ import Footer from './components/Footer'
 import Togglable from './components/Togglable'
 import ReviewForm from './components/ReviewForm'
 import About from './components/routecomps/About'
+import Menu from './components/Menu'
+import Home from './components/routecomps/Home'
 import CreateNew from './components/routecomps/CreateNew'
 import ReviewList from './components/routecomps/ReviewList'
 import reviewService from './services/reviews'
@@ -107,8 +109,11 @@ const App = () => {
   const match = useMatch('/reviews/:id')
 
   const review = match
-    ? reviews.find((review) => review.id === Number(match.params.id))
-    : null
+    ? reviews.find(review => review.id === Number(match.params.id))
+    : reviews.find(review => review.id === '63734fc6ac5bc2e0587ff08b')
+   console.log(reviews)
+   console.log(review)
+   console.log(match)
 
   return (
     <div>
@@ -127,21 +132,16 @@ const App = () => {
         </Togglable> :
         <div>
           <p>{user.name} logged in</p>
+          <Menu />
           <Routes>
-            <Route path="/reviews/:id" element={<Review review={review}/>} />
+            <Route path="/reviews/:id" element={<Review review={review} user={user} handleVote={handleVote}/>} />
             <Route path="/about" element={<About />} />
             <Route path="/create_new" element={<ReviewForm createReview={addReview} />} />
-            <Route path="/" element={<ReviewList reviews={reviews}/>} />
+            <Route path="/" element={<Home />} />
+            <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote}/>} />
           </Routes>
-          <Togglable buttonLabel="new review" ref={reviewFormRef}>
-            <ReviewForm createReview={addReview} />
-          </Togglable>
         </div>
       }
-
-      {reviews.map(review =>
-        <Review key={review.id} review={review} user={user} handleVote={handleVote} />
-      )}
       <Footer />
     </div>
   )
