@@ -28,4 +28,14 @@ const update = async newObject => {
     return request.data
   }
 
-export default { getAll, create, update, setToken }
+const getOLBook = () => {
+    const request = axios.get(`https://openlibrary.org/works/OL45804W.json`)
+    return request.then(response => response.data)
+}
+
+const query = async queryObject => {
+    const request = axios.get(`http://openlibrary.org/search.json?q=${queryObject}`, queryObject)
+    return request.data
+}
+
+export default { getAll, create, update, setToken, getOLBook, query }
