@@ -6,7 +6,7 @@ import BookList from '../BookList'
 
 const Home = () => {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState([])
+  const [results, setResults] = useState([{ title: "title", author: "author" }])
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -17,10 +17,24 @@ const Home = () => {
   //Submit Query and show results
   const handleSubmit = (e) => {
     e.preventDefault()
-    reviewService.query(e.target.value).then(res =>
-      setResults(res[0])
-    )
+    reviewService.query(query).then(results => {
+      //setResults(results)
+      console.log(results.docs[0].key)
+      console.log(results.docs[0].cover_i)
+      console.log(results.docs[0].title)
+      console.log(results.docs[0].author_name[0])
+
+      setResults([{
+        title: results.docs[0].title, 
+        author: results.docs[0].author_name[0]
+      }])
+
+
+
+
+    })
   }
+
   return (
     <div>
       <Form>

@@ -33,8 +33,8 @@ const App = () => {
     reviewService.getAll().then(reviews =>
       setReviews(reviews))
     //test OPEn Library Call
-    reviewService.getOLBook().then(book => 
-      setReviews(reviews.concat(book.title)))
+    // reviewService.getOLBook().then(book => 
+    //   setReviews(reviews.concat(book.title)))
   }, [])
 
   //See if already logged in on first render
