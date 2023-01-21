@@ -18,20 +18,27 @@ const Home = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     reviewService.query(query).then(results => {
-      //setResults(results)
-      console.log(results.docs[0].key)
-      console.log(results.docs[0].cover_i)
-      console.log(results.docs[0].title)
-      console.log(results.docs[0].author_name[0])
+      // console.log(results.docs[0].key)
+      // console.log(results.docs[0].cover_i)
+      // console.log(results.docs[0].title)
+      // console.log(results.docs[0].author_name[0])
 
-      setResults([{
-        title: results.docs[0].title, 
-        author: results.docs[0].author_name[0]
-      }])
+      const arr = []
+      for (let i = 0; i < 10; i++) {
+        arr.push({
+          title: results.docs[i].title,
+          author: results.docs[i].author_name[0],
+          cover: results.docs[i].cover_i
+          
+        })
+        console.log(results.docs[i].cover_i)
+      }
 
-
-
-
+      setResults(arr)
+      // setResults([{
+      //   title: results.docs[0].title, 
+      //   author: results.docs[0].author_name[0]
+      // }])
     })
   }
 
