@@ -1,14 +1,14 @@
 import { useState } from 'react'
 
-const Book = ({ title, author, id, cover }) => {
+const Book = ({ book }) => {
 
 
     return (
         <div>
             <div>
-                {title} by {author} 
+                {book.title} by {book.author} 
             </div>
-            <img src={`https://covers.openlibrary.org/b/id/${cover}-L.jpg`} alt="placeholder" />
+            <img src={`https://covers.openlibrary.org/b/id/${book.cover}-L.jpg`} alt="placeholder" />
             {/* <img src={`https://covers.openlibrary.org/b/id/9165528-L.jpg`} alt="placeholder" /> */}
         </div>
     )

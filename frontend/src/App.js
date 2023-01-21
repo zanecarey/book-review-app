@@ -5,9 +5,10 @@ import {
   Navigate,
   useParams,
   useNavigate,
-  useMatch
+  useMatch,
 } from "react-router-dom"
 import Review from './components/Review'
+import Book from './components/Book'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Footer from './components/Footer'
@@ -28,13 +29,51 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState({ message: null, type: null })
 
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState([{ title: "title", author: "author" }])
+
+  const [book, setBook] = useState('')
+
+  const history = useNavigate()
+  //QUERY HANDLE
+  const handleQueryChange = (e) => {
+    e.preventDefault()
+    setQuery(e.target.value)
+    console.log(e.target.value)
+  }
+
+  //Submit Query and show results
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    reviewService.query(query).then(results => {
+
+      const arr = []
+      for (let i = 0; i < 10; i++) {
+        arr.push({
+          title: results.docs[i].title,
+          author: results.docs[i].author_name[0],
+          cover: results.docs[i].cover_i,
+          book_key: results.docs[i].key.slice(7)
+        })
+        console.log(results.docs[i].key.slice(7))
+      }
+
+      setResults(arr)
+      results = []
+    })
+  }
+
+
+
+
+
+
+
+
   //Fetch all reviews on first render
   useEffect(() => {
     reviewService.getAll().then(reviews =>
       setReviews(reviews))
-    //test OPEn Library Call
-    // reviewService.getOLBook().then(book => 
-    //   setReviews(reviews.concat(book.title)))
   }, [])
 
   //See if already logged in on first render
@@ -109,14 +148,52 @@ const App = () => {
 
   const reviewFormRef = useRef()
 
-  const match = useMatch('/reviews/:id')
+  const match = useMatch('/books/:id')
 
-  const review = match
-    ? reviews.find(review => review.id === Number(match.params.id))
-    : reviews.find(review => review.id === '63734fc6ac5bc2e0587ff08b')
-   console.log(reviews)
-   console.log(review)
-   console.log(match)
+  useEffect(() => {
+    
+    if(match) {
+      reviewService.getOLBook(match.params.id).then(results => {
+            const b =
+            {
+              title: results.title,
+              author: results.authors[0].author.key,
+              cover: results.covers[0],
+              book_key: results.key.slice(7)
+            }
+            //console.log(b)
+            setBook(b)
+            console.log(book)
+          })
+    }
+  }, [history])
+  
+  // const book = match
+  //   ? reviewService.getOLBook(match.params.id).then(results => {
+  //     const b =
+  //     {
+  //       title: results.title,
+  //       author: results.authors[0].author.key,
+  //       cover: results.covers[0],
+  //       book_key: results.key.slice(7)
+  //     }
+  //     console.log(b)
+  //     return b
+  //   })
+    // : null
+
+  // const matchBook = () => {
+  //   reviewService.getOLBook(match.params.id).then(results => {
+  //     return 
+  //     {
+  //       title: results.title,
+  //       author: results.authors[0].author.key,
+  //       cover: results.covers[0],
+  //       book_key: results.key.slice(7)
+  //       }
+  //   })
+  // }
+
 
   return (
     <div>
@@ -137,11 +214,12 @@ const App = () => {
           <p>{user.name} logged in</p>
           <Menu />
           <Routes>
-            <Route path="/reviews/:id" element={<Review review={review} user={user} handleVote={handleVote}/>} />
+            {/* <Route path="/reviews/:id" element={<Review review={review} user={user} handleVote={handleVote} />} /> */}
             <Route path="/about" element={<About />} />
             <Route path="/create_new" element={<ReviewForm createReview={addReview} />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote}/>} />
+            <Route path="/" element={<Home results={results} submitQuery={handleSubmit} handleChange={handleQueryChange} />} />
+            <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} />} />
+            <Route path="/books/:id" element={<Book book={book} />} />
           </Routes>
         </div>
       }

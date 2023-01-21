@@ -28,9 +28,9 @@ const update = async newObject => {
     return request.data
   }
 
-const getOLBook = () => {
-    const request = axios.get(`https://openlibrary.org/works/OL45804W.json`)
-    return request.then(response => response.data)
+const getOLBook = async queryObject => {
+    const request = await axios.get(`https://openlibrary.org/works/${queryObject}.json`, queryObject)
+    return request.data
 }
 
 const query = async queryObject => {
