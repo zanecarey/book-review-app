@@ -70,7 +70,7 @@ const App = () => {
 
 
 
-  //Fetch all reviews on first render
+  //FETCH ALL REVIEWS ON FIRST RENDER
   useEffect(() => {
     reviewService.getAll().then(reviews =>
       setReviews(reviews))
@@ -159,7 +159,8 @@ const App = () => {
               title: results.title,
               author: results.authors[0].author.key,
               cover: results.covers[0],
-              book_key: results.key.slice(7)
+              book_key: results.key.slice(7),
+              book_id: match.params.id
             }
             //console.log(b)
             setBook(b)
@@ -167,33 +168,6 @@ const App = () => {
           })
     }
   }, [history])
-  
-  // const book = match
-  //   ? reviewService.getOLBook(match.params.id).then(results => {
-  //     const b =
-  //     {
-  //       title: results.title,
-  //       author: results.authors[0].author.key,
-  //       cover: results.covers[0],
-  //       book_key: results.key.slice(7)
-  //     }
-  //     console.log(b)
-  //     return b
-  //   })
-    // : null
-
-  // const matchBook = () => {
-  //   reviewService.getOLBook(match.params.id).then(results => {
-  //     return 
-  //     {
-  //       title: results.title,
-  //       author: results.authors[0].author.key,
-  //       cover: results.covers[0],
-  //       book_key: results.key.slice(7)
-  //       }
-  //   })
-  // }
-
 
   return (
     <div>
@@ -219,7 +193,7 @@ const App = () => {
             <Route path="/create_new" element={<ReviewForm createReview={addReview} />} />
             <Route path="/" element={<Home results={results} submitQuery={handleSubmit} handleChange={handleQueryChange} />} />
             <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} />} />
-            <Route path="/books/:id" element={<Book book={book} />} />
+            <Route path="/books/:id" element={<Book book={book} handleAdd={addReview}/>} />
           </Routes>
         </div>
       }

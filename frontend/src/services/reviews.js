@@ -4,6 +4,7 @@ const baseUrl = '/api/reviews'
 let token = null
 let config
 
+//BACKEND REQUESTS
 const setToken = newToken => {
     token = `bearer ${newToken}`
 
@@ -28,6 +29,11 @@ const update = async newObject => {
     return request.data
   }
 
+// const getReviews = async queryObject => {
+//     const request = await axios.get(``)
+// }
+
+//OPEN LIBRARY REQUESTS
 const getOLBook = async queryObject => {
     const request = await axios.get(`https://openlibrary.org/works/${queryObject}.json`, queryObject)
     return request.data

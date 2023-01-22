@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
-const ReviewForm = ({ createReview }) => {
+const ReviewForm = ({ createReview, book_id }) => {
   const [newBookTitle, setNewBookTitle] = useState('')
   const [newReviewTitle, setNewReviewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
 
+  const id = book_id
 
   const handleBookTitleChange = (event) => {
     setNewBookTitle(event.target.value)
@@ -22,6 +23,7 @@ const ReviewForm = ({ createReview }) => {
       bookTitle: newBookTitle,
       author: newAuthor,
       reviewTitle: newReviewTitle,
+      book_id: id
     })
 
     setNewBookTitle('')
