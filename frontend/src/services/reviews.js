@@ -14,9 +14,14 @@ const setToken = newToken => {
 }
 
 const getAll = () => {
-    console.log(baseUrl)
     const request = axios.get(baseUrl)
+    //console.log(request)
     return request.then(response => response.data)
+}
+
+const getBookReviews = async newObject => {
+    const response = await axios.post(baseUrl, newObject, config)
+    return response.data
 }
 
 const create = async newObject => {
@@ -51,4 +56,4 @@ const findAuthorWorks = async queryObject => {
     return request.data
 }
 
-export default { getAll, create, update, setToken, getOLBook, query, findAuthorWorks }
+export default { getAll, create, update, setToken, getOLBook, query, findAuthorWorks, getBookReviews }

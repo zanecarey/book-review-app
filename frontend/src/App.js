@@ -21,16 +21,21 @@ import CreateNew from './components/routecomps/CreateNew'
 import ReviewList from './components/routecomps/ReviewList'
 import reviewService from './services/reviews'
 import loginService from './services/login'
+import Button from 'react-bootstrap/esm/Button'
 
 const App = () => {
+  const [review, setReview] = useState('')
   const [reviews, setReviews] = useState([])
+  const [bookReviews, setBookReviews] = useState([])
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState({ message: null, type: null })
 
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState([{ title: "title", author: "author" }])
+  //const [results, setResults] = useState([{ title: "title", author: "author" }])
+  const [results, setResults] = useState([])
 
   const [book, setBook] = useState('')
 
@@ -113,7 +118,7 @@ const App = () => {
   }
 
   const addReview = (reviewObject) => {
-    reviewFormRef.current.toggleVisibility()
+    //reviewFormRef.current.toggleVisibility()
     reviewService
       .create(reviewObject)
       .then(returnedReview => {
@@ -150,24 +155,51 @@ const App = () => {
 
   const match = useMatch('/books/:id')
 
+  const reviewMatch = useMatch('/reviews/:id')
+
+  //Fetch book if the route matches it's ID
   useEffect(() => {
-    
-    if(match) {
+
+    if (match) {
       reviewService.getOLBook(match.params.id).then(results => {
-            const b =
-            {
-              title: results.title,
-              author: results.authors[0].author.key,
-              cover: results.covers[0],
-              book_key: results.key.slice(7),
-              book_id: match.params.id
-            }
-            //console.log(b)
-            setBook(b)
-            console.log(book)
-          })
+        const b =
+        {
+          title: results.title,
+          author: results.authors[0].author.key,
+          cover: results.covers[0],
+          book_key: results.key.slice(7),
+          // book_id: match.params.id
+        }
+        setBook(b)
+        console.log(b)
+        
+
+        reviewService.getBookReviews({id: b.book_key}).then(reviews =>
+          setBookReviews(reviews),
+          console.log("REVIEW CALL"),
+        )
+      })
     }
   }, [history])
+
+//retrieve reviews for the current book
+// useEffect(() => {
+  
+      
+// }, [])
+
+
+
+
+
+  //Fetch review if the route matches it's ID
+  // useEffect(() => {
+
+  //   if (reviewMatch) {
+  //     setReview()
+  //     })
+  //   }
+  // }, [history])
 
   return (
     <div>
@@ -185,15 +217,20 @@ const App = () => {
           />
         </Togglable> :
         <div>
-          <p>{user.name} logged in</p>
+          <div>
+            <p>{user.name} logged in</p>
+            <Button variant="primary" type="submit" onClick={handleLogout}>
+              Logout
+            </Button>
+          </div>
           <Menu />
           <Routes>
-            {/* <Route path="/reviews/:id" element={<Review review={review} user={user} handleVote={handleVote} />} /> */}
             <Route path="/about" element={<About />} />
             <Route path="/create_new" element={<ReviewForm createReview={addReview} />} />
             <Route path="/" element={<Home results={results} submitQuery={handleSubmit} handleChange={handleQueryChange} />} />
             <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} />} />
-            <Route path="/books/:id" element={<Book book={book} handleAdd={addReview}/>} />
+            <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews}/>} />
+            {/* <Route path="/reviews/:id" element={<Review user={user} review={review} handleVote={handleVote} />} /> */}
           </Routes>
         </div>
       }

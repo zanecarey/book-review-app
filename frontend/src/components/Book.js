@@ -1,19 +1,39 @@
-import { useState } from 'react'
-import reviewService from './services/reviews'
+import { useState, useEffect } from 'react'
+import { useMatch, useNavigate, useParams } from 'react-router-dom'
+import reviewService from '../services/reviews'
 import ReviewForm from './ReviewForm'
-const Book = ({ book, handleAdd }) => {
+import ReviewList from './routecomps/ReviewList'
 
-    //retrieve reviews for the current book
-    reviewService.getAll().then(results => {
-        
-    })
+const Book = ({ book, addReview, bookReviews }) => {
+
+    const navigate = useNavigate()
+    const { params }= useParams()
+
+    const [reviews, setReviews] = useState([])
+    const [bookID, setBookID] = useState(book.book_id)
+
+    //determine ifon a book's page or on home page
+    const match = useMatch('/books/:id')
+    //console.log(book.title)
+    
+
     return (
         <div>
             <div>
-                {book.title} by {book.author} 
+                {book.title} by {book.author}
             </div>
             <img src={`https://covers.openlibrary.org/b/id/${book.cover}-L.jpg`} alt="placeholder" />
-            <ReviewForm createReview={handleAdd} id={book.book_id}/>
+            {match
+                &&
+                <div>
+                    <ReviewForm addReview={addReview} book_id={book.book_id} />
+                    <ReviewList reviews={bookReviews} />
+                </div>
+
+            }
+
+
+
         </div>
     )
 }

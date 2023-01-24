@@ -1,11 +1,10 @@
 import { useState } from 'react'
 
-const ReviewForm = ({ createReview, book_id }) => {
+const ReviewForm = ({ addReview, book_id }) => {
   const [newBookTitle, setNewBookTitle] = useState('')
   const [newReviewTitle, setNewReviewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
 
-  const id = book_id
 
   const handleBookTitleChange = (event) => {
     setNewBookTitle(event.target.value)
@@ -17,15 +16,15 @@ const ReviewForm = ({ createReview, book_id }) => {
     setNewReviewTitle(event.target.value)
   }
 
-  const addReview = (event) => {
+  const createReview = (event) => {
     event.preventDefault()
-    createReview({
+    addReview({
       bookTitle: newBookTitle,
       author: newAuthor,
       reviewTitle: newReviewTitle,
-      book_id: id
+      book_id: book_id
     })
-
+    console.log(book_id)
     setNewBookTitle('')
     setNewReviewTitle('')
     setNewAuthor('')
@@ -37,7 +36,7 @@ const ReviewForm = ({ createReview, book_id }) => {
     <div>
       <h2>Create a new Review</h2>
 
-      <form onSubmit={addReview}>
+      <form onSubmit={createReview}>
         <div>
           book title:
           <input
