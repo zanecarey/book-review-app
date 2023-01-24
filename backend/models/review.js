@@ -6,6 +6,7 @@ const reviewSchema = new mongoose.Schema({
     reviewTitle: String,
     likes: Number,
     dislikes: Number,
+    book_id: String,
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

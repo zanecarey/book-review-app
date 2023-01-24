@@ -19,6 +19,12 @@ reviewsRouter.get('/', async (request, response) => {
     const reviews = await Review
         .find({})
         .populate('user', { username: 1, name: 1 })
+
+
+
+    // .find({ book_id: request.params.id })
+    // .populate('user', { username: 1, name: 1 })
+
     response.json(reviews)
 })
 
@@ -42,19 +48,29 @@ reviewsRouter.post('/', async (request, response, next) => {
 
     const user = await User.findById(decodedToken.id)
 
-    const review = new Review({
-        bookTitle: body.bookTitle,
-        author: body.author,
-        reviewTitle: body.reviewTitle,
-        likes: body.likes || 0,
-        dislikes: body.dislikes || 0,
-        user: user._id
-    })
+    if (Object.keys(body).length <= 1) {
+        const reviews = await Review
+            .find({ book_id: body.id })
+            .populate('user', { username: 1, name: 1 })
+            response.json(reviews)
+    } else {
+        const review = new Review({
+            bookTitle: body.bookTitle,
+            author: body.author,
+            reviewTitle: body.reviewTitle,
+            likes: body.likes || 0,
+            dislikes: body.dislikes || 0,
+            book_id: body.book_id,
+            user: user._id
+        })
+        const savedReview = await review.save()
+        user.reviews = user.reviews.concat(savedReview._id)
+        await user.save()
+        response.status(201).json(savedReview)
+    }
 
-    const savedReview = await review.save()
-    user.reviews = user.reviews.concat(savedReview._id)
-    await user.save()
-    response.status(201).json(savedReview)
+
+
 })
 
 reviewsRouter.delete('/:id', async (request, response, next) => {
@@ -71,6 +87,7 @@ reviewsRouter.put('/:id', async (request, response, next) => {
         reviewTitle: body.reviewTitle,
         likes: body.likes,
         dislikes: body.dislikes,
+        book_id: body.book_id
     }
 
 
