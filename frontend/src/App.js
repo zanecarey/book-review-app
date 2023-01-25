@@ -122,7 +122,7 @@ const App = () => {
     reviewService
       .create(reviewObject)
       .then(returnedReview => {
-        setReviews(reviews.concat(returnedReview))
+        setBookReviews(bookReviews.concat(returnedReview))
         sendNotification({ message: `new review added`, type: 'info' })
       })
       .catch(error => {
@@ -143,7 +143,7 @@ const App = () => {
     reviewService
       .update(reviewObject)
       .then(returnedReview => {
-        setReviews(reviews.map(r => r.id !== returnedReview.id ? r : returnedReview))
+        setBookReviews(bookReviews.map(r => r.id !== returnedReview.id ? r : returnedReview))
         sendNotification({ message: `review updated`, type: 'info' })
       })
       .catch(error => {
@@ -229,7 +229,7 @@ const App = () => {
             <Route path="/create_new" element={<ReviewForm createReview={addReview} />} />
             <Route path="/" element={<Home results={results} submitQuery={handleSubmit} handleChange={handleQueryChange} />} />
             <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} />} />
-            <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews}/>} />
+            <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote}/>} />
             {/* <Route path="/reviews/:id" element={<Review user={user} review={review} handleVote={handleVote} />} /> */}
           </Routes>
         </div>

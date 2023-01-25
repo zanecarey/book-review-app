@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const ReviewForm = ({ addReview, book_id }) => {
+const ReviewForm = ({ addReview, book_key }) => {
   const [newBookTitle, setNewBookTitle] = useState('')
   const [newReviewTitle, setNewReviewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
@@ -22,9 +22,9 @@ const ReviewForm = ({ addReview, book_id }) => {
       bookTitle: newBookTitle,
       author: newAuthor,
       reviewTitle: newReviewTitle,
-      book_id: book_id
+      book_id: book_key
     })
-    console.log(book_id)
+    console.log(book_key)
     setNewBookTitle('')
     setNewReviewTitle('')
     setNewAuthor('')
