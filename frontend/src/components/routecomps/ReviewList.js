@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Review from '../Review'
 import { Link } from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
 
 const ReviewList = ({ reviews, user, handleVote }) => {
 
@@ -38,7 +39,7 @@ const ReviewList = ({ reviews, user, handleVote }) => {
             {/* <button id="like" onClick={() => { handleLike(review) }}>like</button> <button id="dislike" onClick={handleLike}>dislike</button> */}
             {/* <button id="like" onClick={() => setReviewObj(review)}>like</button> <button id="dislike" onClick={setReviewObj(review)}>dislike</button> */}
             {/* <button id="like" onClick={() => setReviewObj(review)}>like</button> <button id="dislike" onClick={() =>setReviewObj(review)}>dislike</button> */}
-            <button id="like" onClick={() => handleLike(review, 'like')}>like</button> <button id="dislike" onClick={() => handleLike(review, 'dislike')}>dislike</button>
+            <Button variant="primary" id="like" onClick={() => handleLike(review, 'like')} >like</Button><Button variant="primary" id="dislike" onClick={() => handleLike(review, 'dislike')}>dislike</Button>
           </li>
         ))}
       </ul>

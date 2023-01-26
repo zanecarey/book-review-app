@@ -16,6 +16,9 @@ const Menu = () => {
       <Link to="/about" style={padding}>
         about
       </Link>
+      <Link to="/my_reviews" style={padding}>
+        my reviews
+      </Link>
     </div>
     )
   }
