@@ -29,6 +29,8 @@ const ReviewList = ({ reviews, user, handleVote }) => {
     }
   }
 
+  console.log(reviews)
+  
   return (
     <div>
       <h2>Reviews</h2>

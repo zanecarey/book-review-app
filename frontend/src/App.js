@@ -172,21 +172,37 @@ const App = () => {
         }
         setBook(b)
         console.log(b)
-        
 
-        reviewService.getBookReviews({id: b.book_key}).then(reviews =>
-          setBookReviews(reviews),
-          console.log("REVIEW CALL"),
+
+        reviewService.getBookReviews({ id: b.book_key }).then(reviews =>
+          setBookReviews(reviews)
         )
       })
     }
   }, [history])
 
-//retrieve reviews for the current book
-// useEffect(() => {
-  
-      
-// }, [])
+  //retrieve reviews for the current book
+  useEffect(() => {
+    if (reviewMatch) {
+      console.log(reviewMatch.params.id)
+      reviewService.getReview(reviewMatch.params.id).then(results => {
+        // let rev = 
+        // {
+        //   bookTitle: results.bookTitle,
+        //   author: results.author,
+        //   reviewTitle: results.reviewTitle,
+        //   likes: results.likes,
+        //   dislikes: results.dislikes,
+        //   book_id: results.book_id,
+        //   user: results.user.username,
+        //   review_id: results.id
+        // }
+        setReview(results)
+        console.log(results)
+    })
+    }
+
+  }, [history])
 
 
 
@@ -229,8 +245,8 @@ const App = () => {
             <Route path="/create_new" element={<ReviewForm createReview={addReview} />} />
             <Route path="/" element={<Home results={results} submitQuery={handleSubmit} handleChange={handleQueryChange} />} />
             <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} />} />
-            <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote}/>} />
-            {/* <Route path="/reviews/:id" element={<Review user={user} review={review} handleVote={handleVote} />} /> */}
+            <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote} />} />
+            <Route path="/reviews/:id" element={<Review user={user} review={review} handleVote={handleVote} />} />
           </Routes>
         </div>
       }

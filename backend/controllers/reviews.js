@@ -20,16 +20,14 @@ reviewsRouter.get('/', async (request, response) => {
         .find({})
         .populate('user', { username: 1, name: 1 })
 
-
-
-    // .find({ book_id: request.params.id })
-    // .populate('user', { username: 1, name: 1 })
-
     response.json(reviews)
 })
 
 reviewsRouter.get('/:id', async (request, response, next) => {
-    const review = await Review.findById(request.params.id)
+    const review = await Review
+    .findById(request.params.id)
+    .populate('user', { username: 1, name: 1 })
+
     if (review) {
         response.json(review.toJSON())
     } else {

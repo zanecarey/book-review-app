@@ -19,6 +19,10 @@ const getAll = () => {
     return request.then(response => response.data)
 }
 
+const getReview = async newObject => {
+    const response = await axios.get(`${baseUrl}/${newObject}`, newObject)
+    return response.data
+}
 const getBookReviews = async newObject => {
     const response = await axios.post(baseUrl, newObject, config)
     return response.data
@@ -56,4 +60,4 @@ const findAuthorWorks = async queryObject => {
     return request.data
 }
 
-export default { getAll, create, update, setToken, getOLBook, query, findAuthorWorks, getBookReviews }
+export default { getAll, create, update, setToken, getOLBook, query, findAuthorWorks, getBookReviews, getReview }
