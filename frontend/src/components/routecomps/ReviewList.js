@@ -37,7 +37,7 @@ const ReviewList = ({ reviews, user, handleVote }) => {
       <ul>
         {reviews.map((review) => (
           <li key={review.id}>
-            <Link to={`/reviews/${review.id}`}>{<Review key={review.id} review={review} user={user} handleVote={handleVote} />}</Link>
+            <Link to={`/reviews/${review.id}`}>{<Review  review={review} />}</Link>
             {/* <button id="like" onClick={() => { handleLike(review) }}>like</button> <button id="dislike" onClick={handleLike}>dislike</button> */}
             {/* <button id="like" onClick={() => setReviewObj(review)}>like</button> <button id="dislike" onClick={setReviewObj(review)}>dislike</button> */}
             {/* <button id="like" onClick={() => setReviewObj(review)}>like</button> <button id="dislike" onClick={() =>setReviewObj(review)}>dislike</button> */}

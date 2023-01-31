@@ -6,11 +6,11 @@ import ReviewList from './routecomps/ReviewList'
 import Togglable from './Togglable'
 const Book = ({ book, addReview, bookReviews, handleVote }) => {
 
-    const navigate = useNavigate()
-    const { params } = useParams()
+    // const navigate = useNavigate()
+    // const { params } = useParams()
 
-    const [reviews, setReviews] = useState([])
-    const [bookID, setBookID] = useState(book.book_key)
+    // const [reviews, setReviews] = useState([])
+    // const [bookID, setBookID] = useState(book.book_key)
 
     //determine ifon a book's page or on home page
     const match = useMatch('/books/:id')

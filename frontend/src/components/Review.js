@@ -1,12 +1,16 @@
 import { useState } from 'react'
+import { useMatch, useNavigate, useParams } from 'react-router-dom'
 
-const Review = ({ user, review, handleVote, handleDeleteReview }) => {
+const Review = ({ review }) => {
 
-    console.log(review)
+    const match = useMatch('/books/:id')
+
     return (
         <div>
             <div>
-                {review.bookTitle} by {review.author} reviewed by 
+                {/* {review.bookTitle} by {review.author} reviewed by {review.user.username} */}
+                {review.bookTitle} by {review.author} reviewed by {review.user.username}
+                
             </div>
             <div>
                 <p>{review.likes} likes {review.dislikes} dislikes</p>

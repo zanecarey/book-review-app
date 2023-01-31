@@ -19,10 +19,11 @@ const getAll = () => {
     return request.then(response => response.data)
 }
 
-const getReview = async newObject => {
-    const response = await axios.get(`${baseUrl}/${newObject}`, newObject)
-    return response.data
+const getReview = (newObject) => {
+    const request = axios.get(`${baseUrl}/${newObject}`)
+    return request.then(response => response.data)
 }
+
 const getBookReviews = async newObject => {
     const response = await axios.post(baseUrl, newObject, config)
     return response.data
@@ -38,9 +39,6 @@ const update = async newObject => {
     return request.data
   }
 
-// const getReviews = async queryObject => {
-//     const request = await axios.get(``)
-// }
 
 //OPEN LIBRARY REQUESTS
 const getOLBook = async queryObject => {

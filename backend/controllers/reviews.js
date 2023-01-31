@@ -25,11 +25,11 @@ reviewsRouter.get('/', async (request, response) => {
 
 reviewsRouter.get('/:id', async (request, response, next) => {
     const review = await Review
-    .findById(request.params.id)
-    .populate('user', { username: 1, name: 1 })
+        .findById(request.params.id)
+        .populate('user', { username: 1, name: 1 })
 
     if (review) {
-        response.json(review.toJSON())
+        response.json(review)
     } else {
         response.status(404).end()
     }
@@ -46,11 +46,13 @@ reviewsRouter.post('/', async (request, response, next) => {
 
     const user = await User.findById(decodedToken.id)
 
+    //Determine if the request was for a books reviews, or a new review being created
     if (Object.keys(body).length <= 1) {
         const reviews = await Review
             .find({ book_id: body.id })
             .populate('user', { username: 1, name: 1 })
-            response.json(reviews)
+            .exec()
+        response.json(reviews)
     } else {
         const review = new Review({
             bookTitle: body.bookTitle,
@@ -85,7 +87,8 @@ reviewsRouter.put('/:id', async (request, response, next) => {
         reviewTitle: body.reviewTitle,
         likes: body.likes,
         dislikes: body.dislikes,
-        book_id: body.book_id
+        book_id: body.book_id,
+        user: body.user.id
     }
 
 

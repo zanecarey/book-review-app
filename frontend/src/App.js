@@ -77,9 +77,11 @@ const App = () => {
 
   //FETCH ALL REVIEWS ON FIRST RENDER
   useEffect(() => {
-    reviewService.getAll().then(reviews =>
-      setReviews(reviews))
-  }, [])
+    reviewService.getAll().then(reviews => {
+      setReviews(reviews)
+      console.log(reviews)
+    })
+   } , [])
 
   //See if already logged in on first render
   useEffect(() => {
@@ -143,7 +145,7 @@ const App = () => {
     reviewService
       .update(reviewObject)
       .then(returnedReview => {
-        setBookReviews(bookReviews.map(r => r.id !== returnedReview.id ? r : returnedReview))
+        setBookReviews(bookReviews.map(r => r.user.id !== returnedReview.user.id ? r : returnedReview))
         sendNotification({ message: `review updated`, type: 'info' })
       })
       .catch(error => {
@@ -174,48 +176,38 @@ const App = () => {
         console.log(b)
 
 
-        reviewService.getBookReviews({ id: b.book_key }).then(reviews =>
+        reviewService.getBookReviews({ id: b.book_key }).then(reviews => {
           setBookReviews(reviews)
+          console.log(reviews)
+        }
         )
       })
     }
   }, [history])
 
-  //retrieve reviews for the current book
+  //fetch review if the route matches it's id
   useEffect(() => {
+    
     if (reviewMatch) {
-      console.log(reviewMatch.params.id)
       reviewService.getReview(reviewMatch.params.id).then(results => {
-        // let rev = 
-        // {
-        //   bookTitle: results.bookTitle,
-        //   author: results.author,
-        //   reviewTitle: results.reviewTitle,
-        //   likes: results.likes,
-        //   dislikes: results.dislikes,
-        //   book_id: results.book_id,
-        //   user: results.user.username,
-        //   review_id: results.id
-        // }
-        setReview(results)
-        console.log(results)
+        let rev = 
+        {
+          bookTitle: results.bookTitle,
+          author: results.author,
+          reviewTitle: results.reviewTitle,
+          likes: results.likes,
+          dislikes: results.dislikes,
+          book_id: results.book_id,
+          user: results.user,
+          id: results.id
+        }
+        
+        setReview(rev)
+        console.log(rev)
     })
     }
 
-  }, [history])
-
-
-
-
-
-  //Fetch review if the route matches it's ID
-  // useEffect(() => {
-
-  //   if (reviewMatch) {
-  //     setReview()
-  //     })
-  //   }
-  // }, [history])
+  }, [history, reviewMatch])
 
   return (
     <div>
@@ -246,7 +238,7 @@ const App = () => {
             <Route path="/" element={<Home results={results} submitQuery={handleSubmit} handleChange={handleQueryChange} />} />
             <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} />} />
             <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote} />} />
-            <Route path="/reviews/:id" element={<Review user={user} review={review} handleVote={handleVote} />} />
+            {review && <Route path="/reviews/:id" element={<Review review={review} />} />}
           </Routes>
         </div>
       }
