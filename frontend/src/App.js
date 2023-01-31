@@ -26,6 +26,7 @@ import Button from 'react-bootstrap/esm/Button'
 const App = () => {
   const [review, setReview] = useState('')
   const [reviews, setReviews] = useState([])
+  const [userReviews, setUserReviews] = useState([])
   const [bookReviews, setBookReviews] = useState([])
 
   const [username, setUsername] = useState('')
@@ -79,7 +80,6 @@ const App = () => {
   useEffect(() => {
     reviewService.getAll().then(reviews => {
       setReviews(reviews)
-      console.log(reviews)
     })
    } , [])
 
@@ -89,10 +89,23 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
+      console.log(user.id)
       reviewService.setToken(user.token)
+
+      reviewService.getUserReviews(user.id).then(reviews => {
+        setUserReviews(reviews.reviews)
+        console.log(reviews)
+      })
     }
   }, [])
 
+  // //FETCH USER'S REVIEWS
+  // useEffect(() => {
+  //   reviewService.getUserReviews(user.id).then(reviews => {
+  //     setUserReviews(reviews.reviews)
+  //     console.log(reviews)
+  //   })
+  //  }, [user])
 
   //Send login request with service
   const handleLogin = async (event) => {
@@ -203,7 +216,7 @@ const App = () => {
         }
         
         setReview(rev)
-        console.log(rev)
+        console.log(rev.user)
     })
     }
 
@@ -238,7 +251,14 @@ const App = () => {
             <Route path="/" element={<Home results={results} submitQuery={handleSubmit} handleChange={handleQueryChange} />} />
             <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} />} />
             <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote} />} />
-            {review && <Route path="/reviews/:id" element={<Review review={review} />} />}
+            {/* {review && <Route path="/reviews/:id" element={<Review review={review} />} />} */}
+            <Route path="/reviews/:id" element={<Review review={review} />} />
+           
+            <Route path="/my_reviews" element={<ReviewList reviews={userReviews} user={user} />} />
+            {/* {user && <Route path="/my_reviews" element={<ReviewList reviews={userReviews} user={user} />} /> } */}
+            
+            
+
           </Routes>
         </div>
       }

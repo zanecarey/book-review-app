@@ -1,5 +1,6 @@
 import axios from 'axios'
 const baseUrl = '/api/reviews'
+const userUrl = '/api/users'
 
 let token = null
 let config
@@ -39,6 +40,10 @@ const update = async newObject => {
     return request.data
   }
 
+const getUserReviews = async newObject => {
+    const response = await axios.get(`${userUrl}/${newObject}`)
+    return response.data
+}
 
 //OPEN LIBRARY REQUESTS
 const getOLBook = async queryObject => {
@@ -58,4 +63,4 @@ const findAuthorWorks = async queryObject => {
     return request.data
 }
 
-export default { getAll, create, update, setToken, getOLBook, query, findAuthorWorks, getBookReviews, getReview }
+export default { getAll, create, update, setToken, getOLBook, query, findAuthorWorks, getBookReviews, getReview, getUserReviews }

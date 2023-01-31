@@ -5,11 +5,22 @@ const User = require('../models/user')
 usersRouter.get('/', async (request, response) => {
   const users = await User
     .find({})
-    .populate('reviews', { url: 1, author: 1, title: 1, likes: 1 })
+    .populate('reviews', { url: 1, author: 1, bookTitle: 1, likes: 1, dislikes: 1, reviewTitle: 1, book_id: 1 })
 
   response.json(users)
 })
 
+usersRouter.get('/:id', async (request, response, next) => {
+  const user = await User
+      .findById(request.params.id)
+      .populate('reviews', { author: 1, bookTitle: 1, likes: 1, dislikes: 1, reviewTitle: 1, book_id: 1})
+
+  if (user) {
+      response.json(user)
+  } else {
+      response.status(404).end()
+  }
+})
 usersRouter.post('/', async (request, response) => {
     const { username, name, password } = request.body
   

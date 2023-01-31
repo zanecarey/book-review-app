@@ -53,6 +53,7 @@ reviewsRouter.post('/', async (request, response, next) => {
             .populate('user', { username: 1, name: 1 })
             .exec()
         response.json(reviews)
+
     } else {
         const review = new Review({
             bookTitle: body.bookTitle,
