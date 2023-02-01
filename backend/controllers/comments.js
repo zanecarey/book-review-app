@@ -1,0 +1,6 @@
+const commentsRouter = require('express').Router()
+const config = require('../utils/config')
+const Comment = require('../models/comment')
+const User = require('../models/user')
+const jwt = require('jsonwebtoken')
+const { default: mongoose } = require('mongoose')

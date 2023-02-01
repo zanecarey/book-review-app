@@ -92,6 +92,7 @@ const App = () => {
       console.log(user.id)
       reviewService.setToken(user.token)
 
+      //Fetch users reviews
       reviewService.getUserReviews(user.id).then(reviews => {
         setUserReviews(reviews.reviews)
         console.log(reviews)

@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 
 const ReviewList = ({ reviews, user, handleVote }) => {
 
-  const [reviewObj, setReviewObj] = useState({})
+  const [sortedArr, setArr] = useState([])
   const [reviewArr, setReviewArr] = useState(reviews)
 
   const handleLike = (review, btn) => {
@@ -29,13 +29,18 @@ const ReviewList = ({ reviews, user, handleVote }) => {
     }
   }
 
-  console.log(reviews)
+
+  // useEffect(() => {
+  //   setReviewArr(reviews.sort((a,b) => b.likes - a.likes))
+  //   console.log(reviewArr)
+  // }, [])
   
   return (
     <div>
       <h2>Reviews</h2>
       <ul>
-        {reviews.map((review) => (
+        {/* Sort reviews by likes */}
+        {reviews.sort(((a,b) => b.likes - a.likes)).map((review) => (
           <li key={review.id}>
             <Link to={`/reviews/${review.id}`}>{<Review  review={review} />}</Link>
             {/* <button id="like" onClick={() => { handleLike(review) }}>like</button> <button id="dislike" onClick={handleLike}>dislike</button> */}
