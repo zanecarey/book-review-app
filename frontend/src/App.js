@@ -218,6 +218,11 @@ const App = () => {
         
         setReview(rev)
         console.log(rev.user)
+
+        //FETCH COMMENTS FOR THE REVIEW
+
+
+        
     })
     }
 
