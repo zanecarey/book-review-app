@@ -4,7 +4,7 @@ import reviewService from '../services/reviews'
 import ReviewForm from './ReviewForm'
 import ReviewList from './routecomps/ReviewList'
 import Togglable from './Togglable'
-const Book = ({ book, addReview, bookReviews, handleVote }) => {
+const Book = ({ book, addReview, bookReviews, handleVote, addComment }) => {
 
     // const navigate = useNavigate()
     // const { params } = useParams()
@@ -30,7 +30,7 @@ const Book = ({ book, addReview, bookReviews, handleVote }) => {
                         <ReviewForm addReview={addReview} book_key={book.book_key} />
                     </Togglable>
 
-                    <ReviewList reviews={bookReviews} handleVote={handleVote} />
+                    <ReviewList reviews={bookReviews} handleVote={handleVote} addComment={addComment} />
                 </div>
 
             }

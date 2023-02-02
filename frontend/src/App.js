@@ -28,6 +28,7 @@ const App = () => {
   const [reviews, setReviews] = useState([])
   const [userReviews, setUserReviews] = useState([])
   const [bookReviews, setBookReviews] = useState([])
+  const [reviewComments, setReviewComments] = useState([])
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -146,6 +147,18 @@ const App = () => {
       })
   }
 
+  const addComment = (commentObject) => {
+    reviewService 
+    .createComment(commentObject)
+    .then(returnedComment => {
+      setReviewComments(reviewComments.concat(returnedComment))
+      console.log(returnedComment)
+    })
+    .catch(error => {
+      sendNotification({ message: `Error: comment could not be added`, type: 'error' })
+    })
+  }
+
   //Notification function that can be used for errors/confirmations
   const sendNotification = message => {
     setNotification(message)
@@ -220,7 +233,18 @@ const App = () => {
         console.log(rev.user)
 
         //FETCH COMMENTS FOR THE REVIEW
+        reviewService.getComments({id: reviewMatch.params.id}).then(results => {
+          // let comments = 
+          // {
+          //   likes: results.likes,
+          //   dislikes: results.dislikes,
+          //   review_id: results.review_id,
+          //   comment: results.comment
+          // }
 
+          setReviewComments(results)
+          console.log(results)
+        })
 
         
     })
@@ -255,10 +279,10 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/create_new" element={<ReviewForm createReview={addReview} />} />
             <Route path="/" element={<Home results={results} submitQuery={handleSubmit} handleChange={handleQueryChange} />} />
-            <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} />} />
-            <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote} />} />
+            <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} addComment={addComment} />} />
+            <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote} addComment={addComment} />} />
             {/* {review && <Route path="/reviews/:id" element={<Review review={review} />} />} */}
-            <Route path="/reviews/:id" element={<Review review={review} />} />
+            <Route path="/reviews/:id" element={<Review review={review} reviewComments={reviewComments} addComment={addComment} />} />
            
             <Route path="/my_reviews" element={<ReviewList reviews={userReviews} user={user} />} />
             {/* {user && <Route path="/my_reviews" element={<ReviewList reviews={userReviews} user={user} />} /> } */}

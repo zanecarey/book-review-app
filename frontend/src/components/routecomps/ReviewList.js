@@ -3,7 +3,7 @@ import Review from '../Review'
 import { Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 
-const ReviewList = ({ reviews, user, handleVote }) => {
+const ReviewList = ({ reviews, user, handleVote, addComment}) => {
 
   const [sortedArr, setArr] = useState([])
   const [reviewArr, setReviewArr] = useState(reviews)
@@ -25,15 +25,9 @@ const ReviewList = ({ reviews, user, handleVote }) => {
         }
       }
       handleVote(updatedReview)
-      //setReviewArr(reviewArr.concat(updatedReview))
     }
   }
 
-
-  // useEffect(() => {
-  //   setReviewArr(reviews.sort((a,b) => b.likes - a.likes))
-  //   console.log(reviewArr)
-  // }, [])
   
   return (
     <div>
@@ -42,7 +36,7 @@ const ReviewList = ({ reviews, user, handleVote }) => {
         {/* Sort reviews by likes */}
         {reviews.sort(((a,b) => b.likes - a.likes)).map((review) => (
           <li key={review.id}>
-            <Link to={`/reviews/${review.id}`}>{<Review  review={review} />}</Link>
+            <Link to={`/reviews/${review.id}`}>{<Review  review={review} addComment={addComment} />}</Link>
             {/* <button id="like" onClick={() => { handleLike(review) }}>like</button> <button id="dislike" onClick={handleLike}>dislike</button> */}
             {/* <button id="like" onClick={() => setReviewObj(review)}>like</button> <button id="dislike" onClick={setReviewObj(review)}>dislike</button> */}
             {/* <button id="like" onClick={() => setReviewObj(review)}>like</button> <button id="dislike" onClick={() =>setReviewObj(review)}>dislike</button> */}

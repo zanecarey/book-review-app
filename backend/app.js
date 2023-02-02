@@ -9,6 +9,7 @@ const loginRouter = require('./controllers/login')
 const mongoose = require('mongoose')
 const app = express()
 const logger = require('./utils/logger')
+const commentsRouter = require('./controllers/comments')
 
 logger.info('connecting to', config.MONGODB_URI)
 
@@ -27,6 +28,7 @@ app.use(middleware.requestLogger)
 app.use('/api/reviews', reviewsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/comments', commentsRouter)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 

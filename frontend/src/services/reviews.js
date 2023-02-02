@@ -1,6 +1,7 @@
 import axios from 'axios'
 const baseUrl = '/api/reviews'
 const userUrl = '/api/users'
+const commentUrl = '/api/comments'
 
 let token = null
 let config
@@ -45,6 +46,16 @@ const getUserReviews = async newObject => {
     return response.data
 }
 
+const createComment = async newObject => {
+    const response = await axios.post(commentUrl, newObject, config)
+    return response.data
+}
+
+const getComments = async newObject => {
+    const response = await axios.post(commentUrl, newObject, config)
+    return response.data
+}
+
 //OPEN LIBRARY REQUESTS
 const getOLBook = async queryObject => {
     const request = await axios.get(`https://openlibrary.org/works/${queryObject}.json`, queryObject)
@@ -63,4 +74,4 @@ const findAuthorWorks = async queryObject => {
     return request.data
 }
 
-export default { getAll, create, update, setToken, getOLBook, query, findAuthorWorks, getBookReviews, getReview, getUserReviews }
+export default { getAll, create, update, setToken, getOLBook, query, findAuthorWorks, getBookReviews, getReview, getUserReviews, createComment, getComments }

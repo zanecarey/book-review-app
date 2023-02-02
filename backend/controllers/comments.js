@@ -6,6 +6,16 @@ const jwt = require('jsonwebtoken')
 const { default: mongoose } = require('mongoose')
 const comment = require('../models/comment')
 
+//GET TOKEN FROM FUNCTION
+const getTokenFrom = request => {
+    const authorization = request.get('authorization')
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+        return authorization.substring(7)
+    }
+    return null
+}
+
+
 commentsRouter.get('/', async (request, response) => {
     const comments = await Comment
         .find({})
@@ -26,17 +36,28 @@ commentsRouter.post('/', async (request, response, next) => {
     const user = await User.findById(decodedToken.id)
 
 
-    const comment = new Comment({
-        comment: body.comment,
-        likes: body.likes || 0,
-        dislikes: body.dislikes || 0,
-        review_id: body.review_id,
-        user: user._id
-    })
-    const savedComment = await comment.save()
-    user.comments = user.comments.concat(savedComment._id)
-    await user.save()
-    response.status(201).json(savedComment)
+    if (Object.keys(body).length <= 1) {
+        const comments = await Comment
+            .find({ review_id: body.id })
+            .populate('user', { username: 1, name: 1 })
+            .exec()
+        response.json(comments)
+
+    } else {
+        const comment = new Comment({
+            comment: body.comment,
+            likes: body.likes || 0,
+            dislikes: body.dislikes || 0,
+            review_id: body.review_id,
+            user: user._id
+        })
+        const savedComment = await comment.save()
+        user.comments = user.comments.concat(savedComment._id)
+        await user.save()
+        response.status(201).json(savedComment)
+    }
+
+
 })
 
 commentsRouter.delete('/:id', async (request, response, next) => {
