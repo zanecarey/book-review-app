@@ -23,7 +23,7 @@ usersRouter.get('/:id', async (request, response, next) => {
   }
 })
 usersRouter.post('/', async (request, response) => {
-    const { username, name, password } = request.body
+    const { username, password } = request.body
   
     if(password === undefined || password.length < 3) {
       return response.status(400).json({error: 'password required and must have length > 3 characters'})
@@ -41,7 +41,6 @@ usersRouter.post('/', async (request, response) => {
   
     const user = new User({
       username,
-      name,
       passwordHash,
     })
   

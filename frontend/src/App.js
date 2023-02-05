@@ -21,6 +21,7 @@ import CreateNew from './components/routecomps/CreateNew'
 import ReviewList from './components/routecomps/ReviewList'
 import reviewService from './services/reviews'
 import loginService from './services/login'
+import userService from './services/users'
 import Button from 'react-bootstrap/esm/Button'
 
 const App = () => {
@@ -32,6 +33,9 @@ const App = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [newName, setNewName] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState({ message: null, type: null })
 
@@ -82,7 +86,7 @@ const App = () => {
     reviewService.getAll().then(reviews => {
       setReviews(reviews)
     })
-   } , [])
+  }, [])
 
   //See if already logged in on first render
   useEffect(() => {
@@ -134,6 +138,21 @@ const App = () => {
     window.localStorage.removeItem('loggedReviewAppUser')
   }
 
+  const handleNewUser = async (event) => {
+    event.preventDefault()
+    try {
+      const user = await userService.createUser({
+        username: newName, password: newPassword
+      })
+
+      setNewName('')
+      setNewPassword('')
+    } catch (exception) {
+      sendNotification({ message: `password must be >3 characters`, type: 'error' })
+
+    }
+  }
+
   const addReview = (reviewObject) => {
     //reviewFormRef.current.toggleVisibility()
     reviewService
@@ -148,15 +167,15 @@ const App = () => {
   }
 
   const addComment = (commentObject) => {
-    reviewService 
-    .createComment(commentObject)
-    .then(returnedComment => {
-      setReviewComments(reviewComments.concat(returnedComment))
-      console.log(returnedComment)
-    })
-    .catch(error => {
-      sendNotification({ message: `Error: comment could not be added`, type: 'error' })
-    })
+    reviewService
+      .createComment(commentObject)
+      .then(returnedComment => {
+        setReviewComments(reviewComments.concat(returnedComment))
+        console.log(returnedComment)
+      })
+      .catch(error => {
+        sendNotification({ message: `Error: comment could not be added`, type: 'error' })
+      })
   }
 
   //Notification function that can be used for errors/confirmations
@@ -214,10 +233,10 @@ const App = () => {
 
   //fetch review if the route matches it's id
   useEffect(() => {
-    
+
     if (reviewMatch) {
       reviewService.getReview(reviewMatch.params.id).then(results => {
-        let rev = 
+        let rev =
         {
           bookTitle: results.bookTitle,
           author: results.author,
@@ -228,12 +247,12 @@ const App = () => {
           user: results.user,
           id: results.id
         }
-        
+
         setReview(rev)
         console.log(rev.user)
 
         //FETCH COMMENTS FOR THE REVIEW
-        reviewService.getComments({id: reviewMatch.params.id}).then(results => {
+        reviewService.getComments({ id: reviewMatch.params.id }).then(results => {
           // let comments = 
           // {
           //   likes: results.likes,
@@ -246,8 +265,8 @@ const App = () => {
           console.log(results)
         })
 
-        
-    })
+
+      })
     }
 
   }, [history, reviewMatch])
@@ -258,18 +277,38 @@ const App = () => {
 
       {/*  */}
       {user === null ?
-        <Togglable buttonLabel='login'>
-          <LoginForm
-            username={username}
-            password={password}
-            handleUsernameChange={({ target }) => setUsername(target.value)}
-            handlePasswordChange={({ target }) => setPassword(target.value)}
-            handleSubmit={handleLogin}
-          />
-        </Togglable> :
+        <div>
+
+          <Togglable buttonLabel='login'>
+            <LoginForm
+              username={username}
+              password={password}
+              handleUsernameChange={({ target }) => setUsername(target.value)}
+              handlePasswordChange={({ target }) => setPassword(target.value)}
+              handleSubmit={handleLogin}
+              btn='login'
+            />
+          </Togglable>
+
+
+          <Togglable buttonLabel='new account'>
+            <LoginForm
+              username={newName}
+              password={newPassword}
+              handleUsernameChange={({ target }) => setNewName(target.value)}
+              handlePasswordChange={({ target }) => setNewPassword(target.value)}
+              handleSubmit={handleNewUser}
+              btn='create'
+            />
+          </Togglable>
+        </div>
+
+
+        :
+
         <div>
           <div>
-            <p>{user.name} logged in</p>
+            <p>{user.username} logged in</p>
             <Button variant="primary" type="submit" onClick={handleLogout}>
               Logout
             </Button>
@@ -283,11 +322,11 @@ const App = () => {
             <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote} addComment={addComment} />} />
             {/* {review && <Route path="/reviews/:id" element={<Review review={review} />} />} */}
             <Route path="/reviews/:id" element={<Review review={review} reviewComments={reviewComments} addComment={addComment} />} />
-           
+
             <Route path="/my_reviews" element={<ReviewList reviews={userReviews} user={user} />} />
             {/* {user && <Route path="/my_reviews" element={<ReviewList reviews={userReviews} user={user} />} /> } */}
-            
-            
+
+
 
           </Routes>
         </div>

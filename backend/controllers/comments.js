@@ -19,7 +19,7 @@ const getTokenFrom = request => {
 commentsRouter.get('/', async (request, response) => {
     const comments = await Comment
         .find({})
-        .populate('user', { username: 1, name: 1 })
+        .populate('user', { username: 1 })
 
     response.json(comments)
 })
@@ -39,7 +39,7 @@ commentsRouter.post('/', async (request, response, next) => {
     if (Object.keys(body).length <= 1) {
         const comments = await Comment
             .find({ review_id: body.id })
-            .populate('user', { username: 1, name: 1 })
+            .populate('user', { username: 1 })
             .exec()
         response.json(comments)
 

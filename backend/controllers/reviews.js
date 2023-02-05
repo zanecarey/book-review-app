@@ -18,7 +18,7 @@ const getTokenFrom = request => {
 reviewsRouter.get('/', async (request, response) => {
     const reviews = await Review
         .find({})
-        .populate('user', { username: 1, name: 1 })
+        .populate('user', { username: 1 })
 
     response.json(reviews)
 })
@@ -26,7 +26,7 @@ reviewsRouter.get('/', async (request, response) => {
 reviewsRouter.get('/:id', async (request, response, next) => {
     const review = await Review
         .findById(request.params.id)
-        .populate('user', { username: 1, name: 1 })
+        .populate('user', { username: 1 })
 
     if (review) {
         response.json(review)
@@ -50,7 +50,7 @@ reviewsRouter.post('/', async (request, response, next) => {
     if (Object.keys(body).length <= 1) {
         const reviews = await Review
             .find({ book_id: body.id })
-            .populate('user', { username: 1, name: 1 })
+            .populate('user', { username: 1 })
             .exec()
         response.json(reviews)
 
