@@ -245,7 +245,8 @@ const App = () => {
           dislikes: results.dislikes,
           book_id: results.book_id,
           user: results.user,
-          id: results.id
+          id: results.id,
+          created_on: results.created_on
         }
 
         setReview(rev)

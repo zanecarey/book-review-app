@@ -18,6 +18,7 @@ const Review = ({ review, user, reviewComments, addComment }) => {
             </div>
             <div>
                 <p>{review.likes} likes {review.dislikes} dislikes</p>
+                <p>created on {review.created_on}</p>
             </div>
 
             <div>

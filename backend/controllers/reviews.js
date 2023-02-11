@@ -62,7 +62,8 @@ reviewsRouter.post('/', async (request, response, next) => {
             likes: body.likes || 0,
             dislikes: body.dislikes || 0,
             book_id: body.book_id,
-            user: user._id
+            user: user._id,
+            created_on: new Date()
         })
         const savedReview = await review.save()
         user.reviews = user.reviews.concat(savedReview._id)

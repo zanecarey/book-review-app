@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
     username: String,
     passwordHash: String,
+    created_on: Date,
     reviews: [
         {
             type: mongoose.Schema.Types.ObjectId,

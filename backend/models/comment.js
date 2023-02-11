@@ -5,6 +5,7 @@ const commentSchema = new mongoose.Schema({
     dislikes: Number,
     review_id: String,
     comment: String,
+    created_on: Date,
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

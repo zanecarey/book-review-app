@@ -49,7 +49,8 @@ commentsRouter.post('/', async (request, response, next) => {
             likes: body.likes || 0,
             dislikes: body.dislikes || 0,
             review_id: body.review_id,
-            user: user._id
+            user: user._id,
+            created_on: new Date()
         })
         const savedComment = await comment.save()
         user.comments = user.comments.concat(savedComment._id)

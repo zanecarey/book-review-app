@@ -2,11 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Menu = () => {
-    const padding = {
-      paddingRight: 5
-    }
-    return (
-      <div>
+  const padding = {
+    paddingRight: 5
+  }
+  return (
+    <div>
+      <Link to="/" style={padding}>
+        home
+      </Link>
       <Link to="/reviews" style={padding}>
         reviews
       </Link>
@@ -20,7 +23,7 @@ const Menu = () => {
         my reviews
       </Link>
     </div>
-    )
-  }
+  )
+}
 
 export default Menu
