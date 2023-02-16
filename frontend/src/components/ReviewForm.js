@@ -1,36 +1,34 @@
 import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
-const ReviewForm = ({ addReview, book_key }) => {
-  const [newBookTitle, setNewBookTitle] = useState('')
+const ReviewForm = ({ addReview, book }) => {
+  
   const [newReviewTitle, setNewReviewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
+  const [textArea, setTextArea] = useState('Type Review')
 
 
-  const handleBookTitleChange = (event) => {
-    setNewBookTitle(event.target.value)
-  }
-  const handleAuthorChange = (event) => {
-    setNewAuthor(event.target.value)
-  }
+ 
   const handleReviewTitleChange = (event) => {
     setNewReviewTitle(event.target.value)
+  }
+
+  const handleTextAreaChange = (event) => {
+    setTextArea(event.target.value)
   }
 
   const createReview = (event) => {
     event.preventDefault()
     addReview({
-      bookTitle: newBookTitle,
-      author: newAuthor,
+      bookTitle: book.bookTitle,
+      author: book.author,
       reviewTitle: newReviewTitle,
-      book_id: book_key
+      //reviewBody: 
+      book_id: book.book_key
     })
-    console.log(book_key)
-    setNewBookTitle('')
+    console.log(book.book_key)
     setNewReviewTitle('')
-    setNewAuthor('')
   }
 
-  
+
 
   return (
     <div>
@@ -38,28 +36,20 @@ const ReviewForm = ({ addReview, book_key }) => {
 
       <form onSubmit={createReview}>
         <div>
-          book title:
-          <input
-            value={newBookTitle}
-            onChange={handleBookTitleChange}
-          />
-        </div>
-        <div>
-          author:
-          <input
-            value={newAuthor}
-            onChange={handleAuthorChange}
-          />
-        </div>
-        <div>
           review title:
           <input
             value={newReviewTitle}
             onChange={handleReviewTitleChange}
           />
         </div>
+
+        <div>
+          <textarea value={textArea} onChange={handleTextAreaChange} />
+        </div>
         <Button type="submit">create</Button>
       </form>
+
+
     </div>
   )
 }

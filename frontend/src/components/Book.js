@@ -27,7 +27,7 @@ const Book = ({ book, addReview, bookReviews, handleVote, addComment }) => {
                 &&
                 <div>
                     <Togglable buttonLabel='Add Review'>
-                        <ReviewForm addReview={addReview} book_key={book.book_key} />
+                        <ReviewForm addReview={addReview} book={book} />
                     </Togglable>
 
                     <ReviewList reviews={bookReviews} handleVote={handleVote} addComment={addComment} />
