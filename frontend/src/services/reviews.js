@@ -39,7 +39,12 @@ const create = async newObject => {
 const update = async newObject => {
     const request = await axios.put(`${baseUrl}/${newObject.id}`, newObject, config)
     return request.data
-  }
+}
+
+const updateComment = async newObject => {
+    const request = await axios.put(`${commentUrl}/${newObject.id}`, newObject, config)
+    return request.data
+}
 
 const getUserReviews = async newObject => {
     const response = await axios.get(`${userUrl}/${newObject}`)
@@ -74,4 +79,4 @@ const findAuthorWorks = async queryObject => {
     return request.data
 }
 
-export default { getAll, create, update, setToken, getOLBook, query, findAuthorWorks, getBookReviews, getReview, getUserReviews, createComment, getComments }
+export default { getAll, create, update, updateComment, setToken, getOLBook, query, findAuthorWorks, getBookReviews, getReview, getUserReviews, createComment, getComments }

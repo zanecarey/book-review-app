@@ -4,7 +4,7 @@ import CommentList from './CommentList'
 import Togglable from './Togglable'
 import CommentForm from './CommentForm'
 
-const Review = ({ review, user, reviewComments, addComment }) => {
+const Review = ({ review, user, reviewComments, addComment, handleCommentVote }) => {
 
     //determine if on a reviews actual page
     const match = useMatch('/reviews/:id')
@@ -32,7 +32,7 @@ const Review = ({ review, user, reviewComments, addComment }) => {
                             <div>
                                 <h1>Comments</h1>
                                 {/* <CommentList comments={comments} /> */}
-                                <CommentList reviewComments={reviewComments} />
+                                <CommentList reviewComments={reviewComments} handleVote={handleCommentVote} />
                             </div>
                         </div>
                     </div>

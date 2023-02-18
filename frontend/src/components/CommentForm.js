@@ -40,8 +40,9 @@ const CommentForm = ({ addComment, review_id, user }) => {
             value={newComment}
             onChange={handleCommentChange}
           />
+          <Button type="submit">create</Button>
         </div>
-        <Button type="submit">create</Button>
+        
       </form>
     </div>
   )

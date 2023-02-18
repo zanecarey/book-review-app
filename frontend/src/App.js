@@ -191,8 +191,22 @@ const App = () => {
     reviewService
       .update(reviewObject)
       .then(returnedReview => {
-        setBookReviews(bookReviews.map(r => r.user.id !== returnedReview.user.id ? r : returnedReview))
+        // setBookReviews(bookReviews.map(r => r.user.id !== returnedReview.user.id ? r : returnedReview))
+        setBookReviews(bookReviews.map(r => r.id !== returnedReview.id ? r : returnedReview))
+
         sendNotification({ message: `review updated`, type: 'info' })
+      })
+      .catch(error => {
+
+      })
+  }
+
+  //Handle Commnt like/dislike
+  const handleCommentVote = (commentObject) => {
+    reviewService
+      .updateComment(commentObject)
+      .then(returnedComment => {
+        setReviewComments(reviewComments.map(c => c.user.id !== returnedComment.user.id ? c : returnedComment))
       })
       .catch(error => {
         sendNotification({ message: `Error: review not changed`, type: 'error' })
@@ -322,7 +336,7 @@ const App = () => {
             <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} addComment={addComment} />} />
             <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote} addComment={addComment} />} />
             {/* {review && <Route path="/reviews/:id" element={<Review review={review} />} />} */}
-            <Route path="/reviews/:id" element={<Review review={review} reviewComments={reviewComments} addComment={addComment} />} />
+            <Route path="/reviews/:id" element={<Review review={review} reviewComments={reviewComments} addComment={addComment} handleCommentVote={handleCommentVote}/>} />
 
             <Route path="/my_reviews" element={<ReviewList reviews={userReviews} user={user} />} />
             {/* {user && <Route path="/my_reviews" element={<ReviewList reviews={userReviews} user={user} />} /> } */}
