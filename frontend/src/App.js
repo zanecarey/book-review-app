@@ -189,9 +189,11 @@ const App = () => {
     reviewService
       .update(reviewObject)
       .then(returnedReview => {
-        // setBookReviews(bookReviews.map(r => r.user.id !== returnedReview.user.id ? r : returnedReview))
+        //setBookReviews(bookReviews.map(r => r.user.id !== returnedReview.user.id ? r : returnedReview))
         setBookReviews(bookReviews.map(r => r.id !== returnedReview.id ? r : returnedReview))
-
+        console.log(returnedReview)
+        //TEST SETTING REVIEWS AFTER VOTE
+        setReviews(reviews.map(r => r.id !== returnedReview.id ? r : returnedReview))
         sendNotification({ message: `review updated`, type: 'info' })
       })
       .catch(error => {

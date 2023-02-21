@@ -92,15 +92,13 @@ reviewsRouter.put('/:id', async (request, response, next) => {
         likes: body.likes,
         dislikes: body.dislikes,
         book_id: body.book_id,
-        user: body.user.id
+        user: body.user._id
     }
 
 
-    Review.findByIdAndUpdate(request.params.id, review, { new: true })
-        .then(updatedReview => {
-            response.json(updatedReview.toJSON())
-        })
-        .catch(error => next(error))
+    const updatedReview = await Review.findByIdAndUpdate(request.params.id, review, { new: true })
+        .populate('user', { username: 1 })
 
+    response.json(updatedReview.toJSON())
 })
 module.exports = reviewsRouter
