@@ -94,13 +94,11 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
-      console.log(user.id)
       reviewService.setToken(user.token)
 
       //Fetch users reviews
       reviewService.getUserReviews(user.id).then(reviews => {
         setUserReviews(reviews.reviews)
-        console.log(reviews)
       })
     }
   }, [])
@@ -227,18 +225,15 @@ const App = () => {
         const b =
         {
           title: results.title,
-          author: results.authors[0].author.key,
+          author: results.authors[0].author.key.slice(9),
           cover: results.covers[0],
           book_key: results.key.slice(7),
           // book_id: match.params.id
         }
         setBook(b)
-        console.log(b)
-
 
         reviewService.getBookReviews({ id: b.book_key }).then(reviews => {
           setBookReviews(reviews)
-          console.log(reviews)
         }
         )
       })
@@ -255,6 +250,7 @@ const App = () => {
           bookTitle: results.bookTitle,
           author: results.author,
           reviewTitle: results.reviewTitle,
+          reviewBody: results.reviewBody,
           likes: results.likes,
           dislikes: results.dislikes,
           book_id: results.book_id,

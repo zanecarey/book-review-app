@@ -4,6 +4,7 @@ const reviewSchema = new mongoose.Schema({
     bookTitle: String,
     author: String,
     reviewTitle: String,
+    reviewBody: String,
     likes: Number,
     dislikes: Number,
     book_id: String,

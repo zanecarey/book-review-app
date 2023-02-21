@@ -13,11 +13,11 @@ const Review = ({ review, user, reviewComments, addComment, handleCommentVote })
         <div>
             <div>
                 {/* {review.bookTitle} by {review.author} reviewed by {review.user.username} */}
-                {review.bookTitle} by {review.author} reviewed by {review?.user?.username}
-
-            </div>
-            <div>
-                <p>{review.likes} likes {review.dislikes} dislikes</p>
+                {review.bookTitle} by {review.author} 
+                <div>{review?.user?.username}</div>
+                
+                <div>{review.likes} likes {review.dislikes} dislikes</div>
+                <p>{review.reviewBody}</p>
                 <p>created on {review.created_on}</p>
             </div>
 

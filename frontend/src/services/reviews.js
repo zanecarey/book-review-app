@@ -69,14 +69,17 @@ const getOLBook = async queryObject => {
 
 const query = async queryObject => {
     const request = await axios.get(`http://openlibrary.org/search.json?q=${queryObject}`, queryObject)
-    console.log(request.data)
     return request.data
 }
 
 const findAuthorWorks = async queryObject => {
     const request = await axios.get(`http://openlibrary.org/authors/${queryObject}/works.json`, queryObject)
-    console.log(request)
     return request.data
 }
 
-export default { getAll, create, update, updateComment, setToken, getOLBook, query, findAuthorWorks, getBookReviews, getReview, getUserReviews, createComment, getComments }
+const findAuthorName = async queryObject => {
+    const request = await axios.get(`http://openlibrary.org/authors/${queryObject}.json`, queryObject)
+    return request.data
+}
+
+export default { getAll, create, update, updateComment, setToken, getOLBook, query, findAuthorWorks,findAuthorName, getBookReviews, getReview, getUserReviews, createComment, getComments }

@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Button from 'react-bootstrap/Button'
-const ReviewForm = ({ addReview, book }) => {
+import reviewService from '../services/reviews'
+
+const ReviewForm = ({ addReview, book, name }) => {
   
   const [newReviewTitle, setNewReviewTitle] = useState('')
   const [textArea, setTextArea] = useState('Type Review')
-
+  
+ 
 
  
   const handleReviewTitleChange = (event) => {
@@ -18,13 +21,13 @@ const ReviewForm = ({ addReview, book }) => {
   const createReview = (event) => {
     event.preventDefault()
     addReview({
-      bookTitle: book.bookTitle,
-      author: book.author,
+      bookTitle: book.title,
+      author: name,
       reviewTitle: newReviewTitle,
-      //reviewBody: 
+      reviewBody: textArea,
       book_id: book.book_key
     })
-    console.log(book.book_key)
+    console.log(book)
     setNewReviewTitle('')
   }
 

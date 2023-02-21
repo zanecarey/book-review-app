@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const BookList = ({ books }) => (
   <div>
-    <h2>Results</h2>
+    {books.length !== 0 && <h2>Results</h2> }
     <ul>
       {books?.map((book) => (
         <li key={book.id}>
