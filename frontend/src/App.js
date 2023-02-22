@@ -38,6 +38,7 @@ const App = () => {
 
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState({ message: null, type: null })
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const [query, setQuery] = useState('')
   //const [results, setResults] = useState([{ title: "title", author: "author" }])
@@ -228,12 +229,13 @@ const App = () => {
         {
           title: results.title,
           author: results.authors[0].author.key.slice(9),
-          cover: results.covers[0],
+          covers: results.covers,
           book_key: results.key.slice(7),
-          // book_id: match.params.id
+          description: results.description
+          
         }
         setBook(b)
-
+        console.log(b)
         reviewService.getBookReviews({ id: b.book_key }).then(reviews => {
           setBookReviews(reviews)
         }
@@ -326,13 +328,16 @@ const App = () => {
               Logout
             </Button>
           </div>
+          <div>
+            <Notification data={notification} />
+          </div>
           <Menu />
           <Routes>
             <Route path="/about" element={<About />} />
             <Route path="/create_new" element={<ReviewForm createReview={addReview} />} />
             <Route path="/" element={<Home results={results} submitQuery={handleSubmit} handleChange={handleQueryChange} />} />
             <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} addComment={addComment} />} />
-            <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote} addComment={addComment} />} />
+            <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote} addComment={addComment} sendNotification={sendNotification} />} />
             {/* {review && <Route path="/reviews/:id" element={<Review review={review} />} />} */}
             <Route path="/reviews/:id" element={<Review review={review} reviewComments={reviewComments} addComment={addComment} handleCommentVote={handleCommentVote}/>} />
 

@@ -4,10 +4,10 @@ import reviewService from '../services/reviews'
 import ReviewForm from './ReviewForm'
 import ReviewList from './routecomps/ReviewList'
 import Togglable from './Togglable'
-const Book = ({ book, addReview, bookReviews, handleVote, addComment }) => {
+const Book = ({ book, addReview, bookReviews, handleVote, addComment, sendNotification }) => {
 
     const [authorName, setAuthorName] = useState(book?.author)
-
+    //const [currentCover, setCover] = useState(book?.covers[0])
 
     //determine ifon a book's page or on home page
     const match = useMatch('/books/:id')
@@ -28,12 +28,19 @@ const Book = ({ book, addReview, bookReviews, handleVote, addComment }) => {
             <div>
                 {book.title} by {authorName}
             </div>
-            <img src={`https://covers.openlibrary.org/b/id/${book.cover}-L.jpg`} alt="placeholder" />
+            <div>
+                {book.covers ? <img src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`} alt="placeholder" /> : null}
+               
+           
+            </div>
+            
             {match
                 &&
+                
                 <div>
+                    <p>{book.description}</p>
                     <Togglable buttonLabel='Add Review'>
-                        <ReviewForm addReview={addReview} book={book} name={authorName} />
+                        <ReviewForm addReview={addReview} book={book} name={authorName} sendNotification={sendNotification} />
                     </Togglable>
 
                     <ReviewList reviews={bookReviews} handleVote={handleVote} addComment={addComment} />

@@ -2,14 +2,14 @@ import { useState, useEffect, useRef } from 'react'
 import Button from 'react-bootstrap/Button'
 import reviewService from '../services/reviews'
 
-const ReviewForm = ({ addReview, book, name }) => {
-  
+const ReviewForm = ({ addReview, book, name, sendNotification }) => {
+
   const [newReviewTitle, setNewReviewTitle] = useState('')
   const [textArea, setTextArea] = useState('Type Review')
-  
- 
 
- 
+
+
+
   const handleReviewTitleChange = (event) => {
     setNewReviewTitle(event.target.value)
   }
@@ -20,15 +20,21 @@ const ReviewForm = ({ addReview, book, name }) => {
 
   const createReview = (event) => {
     event.preventDefault()
-    addReview({
-      bookTitle: book.title,
-      author: name,
-      reviewTitle: newReviewTitle,
-      reviewBody: textArea,
-      book_id: book.book_key
-    })
-    console.log(book)
-    setNewReviewTitle('')
+    if (newReviewTitle === '' || textArea === '') {
+      sendNotification({ message: 'All fields are required for submission', type: 'error' })
+    } else {
+
+
+      addReview({
+        bookTitle: book.title,
+        author: name,
+        reviewTitle: newReviewTitle,
+        reviewBody: textArea,
+        book_id: book.book_key
+      })
+      console.log(book)
+      setNewReviewTitle('')
+    }
   }
 
 
