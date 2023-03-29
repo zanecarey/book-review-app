@@ -22,6 +22,9 @@ import reviewService from './services/reviews'
 import loginService from './services/login'
 import userService from './services/users'
 import Button from 'react-bootstrap/esm/Button'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 const App = () => {
   const [review, setReview] = useState('')
@@ -287,7 +290,7 @@ const App = () => {
   }, [history, reviewMatch])
 
   return (
-    <div>
+    <Container>
       <h2>Book Reviews</h2>
 
       {/*  */}
@@ -349,7 +352,7 @@ const App = () => {
         </div>
       }
       <Footer />
-    </div>
+    </Container>
   )
 }
 

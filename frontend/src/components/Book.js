@@ -34,7 +34,7 @@ const Book = ({ book, addReview, bookReviews, handleVote, addComment, sendNotifi
                 {book.title} by {authorName}
             </div>
             <div>
-                <img src={`https://covers.openlibrary.org/b/id/${book.cover}-L.jpg`} alt="placeholder" />
+                <img src={`https://covers.openlibrary.org/b/id/${book.cover}-M.jpg`} alt="placeholder" />
             </div>
 
             {match

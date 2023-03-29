@@ -4,11 +4,14 @@ import Button from 'react-bootstrap/Button'
 import reviewService from '../../services/reviews'
 import BookList from '../BookList'
 import useMatch from 'react-router-dom'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 const Home = ({results, submitQuery, handleChange}) => {
 
   return (
-    <div>
+    <Container>
       <Form>
         <Form.Group className="book-search" controlId="formSearch">
           <Form.Label>Search</Form.Label>
@@ -24,7 +27,7 @@ const Home = ({results, submitQuery, handleChange}) => {
       </Form>
 
       <BookList books={results} />
-    </div>
+    </Container>
 
   )
 }
