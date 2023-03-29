@@ -17,7 +17,6 @@ import ReviewForm from './components/ReviewForm'
 import About from './components/routecomps/About'
 import Menu from './components/Menu'
 import Home from './components/routecomps/Home'
-import CreateNew from './components/routecomps/CreateNew'
 import ReviewList from './components/routecomps/ReviewList'
 import reviewService from './services/reviews'
 import loginService from './services/login'
@@ -335,7 +334,6 @@ const App = () => {
           <Menu />
           <Routes>
             <Route path="/about" element={<About />} />
-            <Route path="/create_new" element={<ReviewForm createReview={addReview} />} />
             <Route path="/" element={<Home results={results} submitQuery={handleSubmit} handleChange={handleQueryChange} />} />
             <Route path="/reviews" element={<ReviewList reviews={reviews} user={user} handleVote={handleVote} addComment={addComment} />} />
             <Route path="/books/:id" element={<Book book={book} addReview={addReview} bookReviews={bookReviews} handleVote={handleVote} addComment={addComment} sendNotification={sendNotification} />} />

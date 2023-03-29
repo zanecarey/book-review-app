@@ -13,9 +13,6 @@ const Menu = () => {
       <Link to="/reviews" style={padding}>
         reviews
       </Link>
-      <Link to="/create_new" style={padding}>
-        create new
-      </Link>
       <Link to="/about" style={padding}>
         about
       </Link>

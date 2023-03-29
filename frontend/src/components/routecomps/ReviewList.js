@@ -31,7 +31,8 @@ const ReviewList = ({ reviews, user, handleVote, addComment}) => {
   
   return (
     <div>
-      <h2>Reviews</h2>
+      { reviews.length !== 0 && <h2>Reviews</h2> }
+      { reviews.length === 0 && <h2>no reviews yet</h2>}
       <ul>
         {/* Sort reviews by likes */}
         {reviews.sort(((a,b) => b.likes - a.likes)).map((review) => (
