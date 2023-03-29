@@ -29,15 +29,14 @@ const Book = ({ book, addReview, bookReviews, handleVote, addComment, sendNotifi
                 {book.title} by {authorName}
             </div>
             <div>
-                {book.covers ? <img src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`} alt="placeholder" /> : null}
-               
-           
+                <img src={`https://covers.openlibrary.org/b/id/${book.cover}-L.jpg`} alt="placeholder" />
             </div>
-            
+
             {match
                 &&
-                
+
                 <div>
+                    {book.covers ? <img src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`} alt="placeholder" /> : null}
                     <p>{book.description}</p>
                     <Togglable buttonLabel='Add Review'>
                         <ReviewForm addReview={addReview} book={book} name={authorName} sendNotification={sendNotification} />

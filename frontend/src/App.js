@@ -68,6 +68,7 @@ const App = () => {
           book_key: results.docs[i].key.slice(7)
         })
         console.log(results.docs[i].key.slice(7))
+        console.log(results.docs[i].cover_i)
       }
 
       setResults(arr)
