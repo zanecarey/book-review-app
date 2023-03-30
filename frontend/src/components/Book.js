@@ -31,7 +31,7 @@ const Book = ({ book, addReview, bookReviews, handleVote, addComment, sendNotifi
     return (
         <div>
             <div>
-                {book.title} by {authorName}
+                {/* {book.title} by {authorName} */}
             </div>
             <div>
                 <img src={`https://covers.openlibrary.org/b/id/${book.cover}-M.jpg`} alt="placeholder" />

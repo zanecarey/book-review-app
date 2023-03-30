@@ -1,16 +1,16 @@
 import React from 'react'
 const About = () => (
-    <div>
-      <h2>About Book-Review-Page</h2>
-      <p>According to Wikipedia:</p>
-  
-      <em>An anecdote is a brief, revealing account of an individual person or an incident.
-        Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
-        such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
-        An anecdote is "a story with a point."</em>
-  
-      <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
-    </div>
-  )
+  <div>
+    <h2>About Book-Review-Page</h2>
+
+    <em>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    </em>
+
+  </div>
+)
 
 export default About
